@@ -16,8 +16,11 @@ import org.jfree.ui.ApplicationFrame;
 
 class HistogramDisplay extends ApplicationFrame{
     
-    public HistogramDisplay(){
+    public final Histogram<String> histo;
+    
+    public HistogramDisplay(Histogram<String> histo){
         super("HISTOGRAMA");
+        this.histo = histo;
         setContentPane(createPanel());
         pack(); //la ventana tome el tamaño más pequeño posible que permita ver todoslos componentes.
         
@@ -48,10 +51,11 @@ class HistogramDisplay extends ApplicationFrame{
     //Metodo que crea el conjunto de datos
     private DefaultCategoryDataset createDataset(){
         DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
-        dataSet.addValue(333, "", "outlook.com");
-        dataSet.addValue(200, "", "outlook.es");
-        dataSet.addValue(40, "", "ulpgc.es");
-        dataSet.addValue(20, "", "gmail.es");
+       
+        for (String key : histo.keySet()) {
+            dataSet.addValue(histo.get(key),"", key);
+        }
+        
         return dataSet;
         
     }
